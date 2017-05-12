@@ -81,6 +81,7 @@ counter = 0
 max_iter = 1000000
 num_samples = 20
 check_interval = 1000
+save_interval = 10000
 
 for i in range(max_iter):
     X_mb, _ = mnist.train.next_batch(mb_size)
@@ -101,3 +102,7 @@ for i in range(max_iter):
             im.save('{}/{}.png'.format(dirname, j))
 
         counter += 1
+
+        if i % save_interval == 0:
+            save_path = tf.train.saver.save(sess, "./models/model_{}.ckpt".format(i))
+            print("Model saved in file: %s" % save_path)
